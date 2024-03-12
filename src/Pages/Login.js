@@ -5,9 +5,10 @@ import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+    
     const email = useRef("");
     const password = useRef("")
-    const usersRef = collection(db, 'users ');
+    const usersRef = collection(db, 'users');
     const navigate = useNavigate();
     const login = async (e) => {
         e.preventDefault();
