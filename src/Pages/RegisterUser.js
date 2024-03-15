@@ -1,75 +1,109 @@
-import React, {useState} from 'react';
-import {db} from '../firebase';
-import {getDocs, collection, query, where} from 'firebase/firestore';
-import {Button, IconButton, InputAdornment, TextField, Typography} from "@mui/material";
-import {Visibility, VisibilityOff} from "@mui/icons-material";
-import {Link} from "react-router-dom";
-import CloseIcon from "@mui/icons-material/Close";
+import React, { useEffect, useRef, useState } from 'react';
+import { db } from '../firebase';
+import { getDocs, collection, query, where, addDoc } from 'firebase/firestore';
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Link, useNavigate } from "react-router-dom";
+import ReplyAllIcon from '@mui/icons-material/ReplyAll';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import MySVG from '../img/logo-no-background.png';
+import { Alert, AlertTitle, Button, Fade, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
+import { teal } from '@mui/material/colors';
+import AlertOk from "../components/AlertOk";
+import AlertErr from "../components/AlertErr";
 
 function RegisterUser() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState(null);
+    const colorAlertOk = teal[400];
     const [showPassword, setShowPassword] = useState(false);
-    const handleShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
-    const handleRegister = async (collectionName, data) => {
+    const [showPasswordR, setShowPasswordR] = useState(false);
+    const handleShowPassword = () => setShowPassword(!showPassword);
+    const handleShowPasswordR = () => setShowPasswordR(!showPasswordR);
+
+    const navigate = useNavigate();
+    const firstNameRef = useRef('');
+    const lastNameRef = useRef('');
+    const emailRef = useRef('');
+    const birthRef = useRef('');
+    const passwordRef = useRef('');
+    const ref = collection(db, "users");
+    const [open, setOpen] = useState(false);
+    const [openErr, setOpenErr] = useState(false);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const userData = {
+            firstName: firstNameRef.current.value,
+            lastName: lastNameRef.current.value,
+            email: emailRef.current.value,
+            birth: birthRef.current.value,
+            password: passwordRef.current.value,
+        };
 
         try {
-            const docRef = await db.collection(collectionName).add(data);
-            console.log("Documento agregado con ID: ", docRef.id);
-            return docRef.id;
+            await addDoc(ref, userData);
+            setOpen(true);
+            setTimeout(() => {
+                navigate('/', { replace: false });
+            }, 2500);
+
         } catch (error) {
-            console.error("Error al agregar documento: ", error);
-            throw error; // Puedes manejar el error de acuerdo a tus necesidades
+            console.error("Error al insertar datos:", error);
+            setOpenErr(true);
         }
     };
 
+    useEffect(() => {
+        const timer = setTimeout(() => setOpenErr(false), 1800);
+        return () => clearTimeout(timer);
+    }, [openErr]);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setOpen(false), 1800);
+        return () => clearTimeout(timer);
+    }, [open]);
+
     return (
         <div className="container m-auto">
-            <div className="container mx-auto p-8 bg-white rounded-xl shadow-xl">
-                <div className="flex justify-end items-end text-2xl">
-                    <Link to="/"
-                          className="text-red-950 rounded-full p-2 hover:scale-110 cursor-pointer transition-transform">
-                        <CloseIcon/>
-                    </Link>
+            <Fade in={openErr} timeout={2}>
+                <div>
+                    <AlertErr msg="Failed to register user"/>
+                    <AlertOk msg="User registered, please login"/>
                 </div>
+            </Fade>
+
+            <Fade in={open} timeout={2}>
+                <div>
+                    <AlertOk msg="User registered, please login"/>
+                </div>
+            </Fade>
+
+            <div className="p-8 bg-white">
                 <div className="flex justify-center items-center">
-                    <img className="w-80" src={MySVG} alt="My SVG"/>
+                    <img className="w-44" src={MySVG} alt="logo"/>
                 </div>
 
-                {/* Profile Form */}
-                <form id="registrationForm" className="lg:px-48 mx-auto w-full justify-center items-center">
-                    <Typography variant="h6" className="mt-6 text-sm lg:text-2xl font-bold mb-6">Create an
-                        Account</Typography>
+                <form onSubmit={handleSubmit} className="lg:px-48 mx-auto w-full justify-center items-center">
+                    <Typography variant="h6" className="mt-6 text-sm lg:text-2xl font-bold mb-6">Create an Account</Typography>
                     <div className="flex flex-wrap -mx-3 mb-6">
                         <div className="w-full md:w-1/2 px-3">
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                   htmlFor="firstName">First Name</label>
-                            <TextField id="firstName" type="text" name="name" variant="outlined" placeholder=""
-                                       fullWidth required/>
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="firstName">First Name</label>
+                            <TextField id="firstName" type="text" name="firstName" variant="outlined" placeholder="" inputRef={firstNameRef} fullWidth required/>
                         </div>
                         <div className="w-full md:w-1/2 px-3">
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                   htmlFor="lastName">Last Name</label>
-                            <TextField id="lastName" type="text" name="lastname" variant="outlined" placeholder=""
-                                       fullWidth required/>
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="lastName">Last Name</label>
+                            <TextField id="lastName" type="text" name="lastName" variant="outlined" placeholder="" inputRef={lastNameRef} fullWidth required/>
                         </div>
                     </div>
-                    {/* Passwords */}
+
                     <div className="flex flex-wrap -mx-3 mb-2">
-                        {/* First Password */}
                         <div className="w-full md:w-1/2 px-3">
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                   htmlFor="passwordInput">Password</label>
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="passwordInput">Password</label>
                             <TextField
-                                label="Password"
-                                inputRef={password}
+                                name="password"
                                 className="w-full mb-4"
                                 variant="outlined"
                                 type={showPassword ? "text" : "password"}
+                                inputRef={passwordRef}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -82,27 +116,20 @@ function RegisterUser() {
                                 fullWidth
                                 required
                             />
-                            <p className="mb-4 text-gray-600 text-xs italic">Make sure that the password contains more
-                                than 8 characters, including normal, numeric and special characters
-                                (a,b,c,d,A,B,C,D,1,2,4,5,#,$,%,&; etc. ..)</p>
+                            <p className="mb-4 text-gray-600 text-xs italic">Make sure that the password contains more than 8 characters, including normal, numeric and special characters (a,b,c,d,A,B,C,D,1,2,4,5,#,$,%,&; etc. ..)</p>
                         </div>
-                        {/* End First Password */}
 
-                        {/* Password Repeat */}
                         <div className="w-full md:w-1/2 px-3">
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                   htmlFor="password_repeat">Repeat Password</label>
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="password_repeat">Repeat Password</label>
                             <TextField
-                                label="Password"
-                                inputRef={password}
                                 className="w-full mb-4"
                                 variant="outlined"
-                                type={showPassword ? "text" : "password"}
+                                type={showPasswordR ? "text" : "password"}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
-                                            <IconButton onClick={handleShowPassword} edge="end">
-                                                {showPassword ? <VisibilityOff/> : <Visibility/>}
+                                            <IconButton onClick={handleShowPasswordR} edge="end">
+                                                {showPasswordR ? <VisibilityOff/> : <Visibility/>}
                                             </IconButton>
                                         </InputAdornment>
                                     ),
@@ -112,33 +139,29 @@ function RegisterUser() {
                             />
                             <p className="text-gray-600 text-xs italic">Repeat the password you wrote.</p>
                         </div>
-                        {/* End Password Repeat */}
                     </div>
-                    {/* End Passwords */}
 
                     <div className="flex flex-wrap -mx-3 mb-2">
                         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                   htmlFor="email">E-mail</label>
-                            <TextField id="email" type="email" name="email" variant="outlined"
-                                       placeholder="useremail@example.com" fullWidth required/>
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="email">E-mail</label>
+                            <TextField id="email" type="email" name="email" variant="outlined" inputRef={emailRef} placeholder="useremail@example.com" fullWidth required/>
                         </div>
 
                         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                   htmlFor="birth">Birth</label>
-                            <TextField id="birth" type="date" name="date" variant="outlined" fullWidth required/>
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="birth">Birth</label>
+                            <TextField id="birth" type="date" name="birth" variant="outlined" inputRef={birthRef} fullWidth required/>
                         </div>
                     </div>
 
-                    {/* Button Register */}
                     <div className="mt-8 flex items-center justify-center text-center">
-                        <Button type="submit" id="btnRegister" variant="contained" color="error"
-                                className="w-1/2 text-white bg-primary hover:bg-primary2">
-                            Register <i className="fas fa-user-plus"></i>
-                        </Button>
+                        <Button type="submit" className="rounded-xl w-1/2 text-white bg-primary hover:bg-primaryHover">Register <PersonAddAltIcon/></Button>
                     </div>
-                    {/* End Button Register */}
+
+                    <div className="mt-8 flex items-center justify-center text-center">
+                        <Link to="/" className="hover:underline text-secondary hover:text-secondaryHover flex items-center">
+                            <span>Go back</span> <ReplyAllIcon/>
+                        </Link>
+                    </div>
                 </form>
             </div>
         </div>

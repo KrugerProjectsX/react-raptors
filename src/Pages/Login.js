@@ -6,8 +6,9 @@ import {getDocs, collection, query, where} from 'firebase/firestore';
 import {useNavigate} from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import MySVG from "../img/logo-no-background.png";
-
-
+import LoginIcon from '@mui/icons-material/Login';
+import ReplyAllIcon from "@mui/icons-material/ReplyAll";
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 export default function Login() {
     const email = useRef("");
     const password = useRef("");
@@ -91,9 +92,13 @@ export default function Login() {
                         disabled={isLoading}
                         className="w-full text-white bg-primary hover:bg-primary2">
                         {isLoading ? <CircularProgress size={24} color="inherit"/> : 'Login'}
+                        <LoginIcon/>
                     </Button>
                     <div className="mt-4 text-center">
-                        <Link to="/register" className="text-primary2 hover:underline">Registrarse</Link>
+                        <p>You don't have an account yet,
+                        <Link to="/register" className="underline text-secondary hover:text-secondaryHover">
+                            <span> register</span>
+                        </Link> here.</p>
                     </div>
                 </Box>
             </div>

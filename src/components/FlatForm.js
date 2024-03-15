@@ -22,7 +22,6 @@ export default function FlatForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const flat = {
             city: city.current.value,
             streetName: streetName.current.value,
@@ -35,12 +34,10 @@ export default function FlatForm() {
         }
         await addDoc(ref, flat);
         navigate('/flats', { replace: false });
-
-
-
     }
+
     return (
-        <Box component="form" onSubmit={handleSubmit} className="max-w-sm mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+        <Box component="form" onSubmit={handleSubmit} className="max-w-sm mx-auto mt-8 mb-4 p-6 bg-white rounded-lg shadow-md">
             <TextField label="City" inputRef={city} variant="outlined" fullWidth className="mb-4" />
             <TextField label="Street name" inputRef={streetName} variant="outlined" fullWidth className="mb-4" />
             <TextField label="Street number" inputRef={streetNumber} variant="outlined" fullWidth className="mb-4" />
@@ -52,7 +49,7 @@ export default function FlatForm() {
             <TextField label="Year built" type={'number'} inputProps={{ min: 1900, max: 2050 }}  inputRef={yearBuilt} variant="outlined" fullWidth className="mb-4" />
             <TextField label="Rent price" type={'number'} inputRef={rentPrice} variant="outlined" fullWidth className="mb-4" />
             <TextField label="Date Available" type={'date'} defaultValue={currentDate} inputRef={dateAvailable} variant="outlined" fullWidth className="mb-4" />
-            <Button type="submit" className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <Button type="submit" className="w-full bg-primary hover:bg-primary2 text-white font-bold py-2 px-4 rounded">
                 Add Flat
             </Button>
         </Box>
