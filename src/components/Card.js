@@ -41,13 +41,11 @@ export default function RecipeReviewCard() {
         <>
             <div className={'flex justify-center items-center m-4'}>
                 <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-8">
-
                     <div>
-
                         <Card sx={{maxWidth: 345}}>
                             <CardHeader
                                 avatar={
-                                    <Avatar sx={{bgcolor: '#53a7f5'}} aria-label="recipe">
+                                    <Avatar sx={{bgcolor: '#bec5d7'}} aria-label="recipe">
                                         R
                                     </Avatar>
                                 }
@@ -120,11 +118,10 @@ export default function RecipeReviewCard() {
                         </Card>
                     </div>
                     <div>
-
                         <Card sx={{maxWidth: 345}}>
                             <CardHeader
                                 avatar={
-                                    <Avatar sx={{bgcolor: '#53a7f5'}} aria-label="recipe">
+                                    <Avatar sx={{bgcolor: '#bec5d7'}} aria-label="recipe">
                                         R
                                     </Avatar>
                                 }
@@ -197,11 +194,10 @@ export default function RecipeReviewCard() {
                         </Card>
                     </div>
                     <div>
-
                         <Card sx={{maxWidth: 345}}>
                             <CardHeader
                                 avatar={
-                                    <Avatar sx={{bgcolor: '#53a7f5'}} aria-label="recipe">
+                                    <Avatar sx={{bgcolor: '#bec5d7'}} aria-label="recipe">
                                         R
                                     </Avatar>
                                 }
@@ -274,11 +270,10 @@ export default function RecipeReviewCard() {
                         </Card>
                     </div>
                     <div>
-
                         <Card sx={{maxWidth: 345}}>
                             <CardHeader
                                 avatar={
-                                    <Avatar sx={{bgcolor: '#53a7f5'}} aria-label="recipe">
+                                    <Avatar sx={{bgcolor: '#bec5d7'}} aria-label="recipe">
                                         R
                                     </Avatar>
                                 }
@@ -351,11 +346,10 @@ export default function RecipeReviewCard() {
                         </Card>
                     </div>
                     <div>
-
                         <Card sx={{maxWidth: 345}}>
                             <CardHeader
                                 avatar={
-                                    <Avatar sx={{bgcolor: '#53a7f5'}} aria-label="recipe">
+                                    <Avatar sx={{bgcolor: '#bec5d7'}} aria-label="recipe">
                                         R
                                     </Avatar>
                                 }
@@ -428,11 +422,10 @@ export default function RecipeReviewCard() {
                         </Card>
                     </div>
                     <div>
-
                         <Card sx={{maxWidth: 345}}>
                             <CardHeader
                                 avatar={
-                                    <Avatar sx={{bgcolor: '#53a7f5'}} aria-label="recipe">
+                                    <Avatar sx={{bgcolor: '#bec5d7'}} aria-label="recipe">
                                         R
                                     </Avatar>
                                 }
@@ -505,11 +498,10 @@ export default function RecipeReviewCard() {
                         </Card>
                     </div>
                     <div>
-
                         <Card sx={{maxWidth: 345}}>
                             <CardHeader
                                 avatar={
-                                    <Avatar sx={{bgcolor: '#53a7f5'}} aria-label="recipe">
+                                    <Avatar sx={{bgcolor: '#bec5d7'}} aria-label="recipe">
                                         R
                                     </Avatar>
                                 }
@@ -582,11 +574,10 @@ export default function RecipeReviewCard() {
                         </Card>
                     </div>
                     <div>
-
                         <Card sx={{maxWidth: 345}}>
                             <CardHeader
                                 avatar={
-                                    <Avatar sx={{bgcolor: '#53a7f5'}} aria-label="recipe">
+                                    <Avatar sx={{bgcolor: '#bec5d7'}} aria-label="recipe">
                                         R
                                     </Avatar>
                                 }
@@ -659,11 +650,10 @@ export default function RecipeReviewCard() {
                         </Card>
                     </div>
                     <div>
-
                         <Card sx={{maxWidth: 345}}>
                             <CardHeader
                                 avatar={
-                                    <Avatar sx={{bgcolor: '#53a7f5'}} aria-label="recipe">
+                                    <Avatar sx={{bgcolor: '#bec5d7'}} aria-label="recipe">
                                         R
                                     </Avatar>
                                 }
@@ -736,11 +726,10 @@ export default function RecipeReviewCard() {
                         </Card>
                     </div>
                     <div>
-
                         <Card sx={{maxWidth: 345}}>
                             <CardHeader
                                 avatar={
-                                    <Avatar sx={{bgcolor: '#53a7f5'}} aria-label="recipe">
+                                    <Avatar sx={{bgcolor: '#bec5d7'}} aria-label="recipe">
                                         R
                                     </Avatar>
                                 }
@@ -813,11 +802,10 @@ export default function RecipeReviewCard() {
                         </Card>
                     </div>
                     <div>
-
                         <Card sx={{maxWidth: 345}}>
                             <CardHeader
                                 avatar={
-                                    <Avatar sx={{bgcolor: '#53a7f5'}} aria-label="recipe">
+                                    <Avatar sx={{bgcolor: '#bec5d7'}} aria-label="recipe">
                                         R
                                     </Avatar>
                                 }
@@ -890,11 +878,10 @@ export default function RecipeReviewCard() {
                         </Card>
                     </div>
                     <div>
-
                         <Card sx={{maxWidth: 345}}>
                             <CardHeader
                                 avatar={
-                                    <Avatar sx={{bgcolor: '#53a7f5'}} aria-label="recipe">
+                                    <Avatar sx={{bgcolor: '#bec5d7'}} aria-label="recipe">
                                         R
                                     </Avatar>
                                 }
